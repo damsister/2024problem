@@ -1,4 +1,4 @@
-using DataStrucuture;
+using DataStrucuture4;
 using UnityEngine;
 
 public class BulletMove : MonoBehaviour
