@@ -11,7 +11,7 @@ public class BulletMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init(new Vector3(0, 0, 0), null);
+        Init(new Vector3(-9, 0, 0), null);
         BulletDirection.Normalize();
     }
 

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 321}
   m_MaxSize: {x: 10000, y: 10000}
@@ -722,9 +722,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 185d0000
+      m_SelectedIDs: e60f0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ea3ffffbaa5ffff76daffffcef5ffff38f8ffffdef8ffffeaf9ffff30fbffff9c5a0000
+      m_ExpandedIDs: 30fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -891,7 +891,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Problem_2/Script
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -899,16 +899,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Problem_2/Script
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "D:\\\uAE40\uB3C4\uD604-2\\\uC720\uD55C\uB300\uD559\uAD50\\\uC720\uD55C\uB3003\\2024Problem\\ProblemSol"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: cc590000
-    m_LastClickedID: 22988
-    m_ExpandedIDs: 00000000c0590000c8590000ca59000000ca9a3b
+    m_SelectedIDs: d0590000
+    m_LastClickedID: 22992
+    m_ExpandedIDs: 00000000c0590000c2590000c459000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -936,7 +936,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c0590000
+    m_ExpandedIDs: 00000000c0590000c2590000c4590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

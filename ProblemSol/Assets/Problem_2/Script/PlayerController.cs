@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Bullet.SetActive(false);
+        Bullet.SetActive(false);
         queue = new Queue<GameObject>();
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = Instantiate(Bullet);
-            obj.GetComponent<BulletMove>().Init(transform.position, queue);
+            obj.GetComponent<BulletMove>().Init(transform.position, queue); // 여기서 총알의 초기 위치를 플레이어의 위치로 설정
             queue.Enqueue(obj);
         }
     }
