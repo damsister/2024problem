@@ -3,64 +3,69 @@ using UnityEngine;
 
 namespace DataStrucuture4
 {
-    public class StackNode<T>
+    public class QueueStack<T>
     {
-        public T Data { get; set; }
-        public StackNode<T> Next { get; set; }
+        private Queue<T> queue1;
+        private Queue<T> queue2;
+        private int count;
 
-        public StackNode(T data)
+        public QueueStack()
         {
-            Data = data;
-            Next = null;
-        }
-    }
-
-    public class Stack<T>
-    {
-        private StackNode<T> top;
-
-        public Stack()
-        {
-            top = null;
+            queue1 = new Queue<T>();
+            queue2 = new Queue<T>();
+            count = 0;
         }
 
+        // 스택에 요소를 추가합니다.
         public void Push(T data)
         {
-            StackNode<T> newNode = new StackNode<T>(data);
-            newNode.Next = top;
-            top = newNode;
-        }
-
-        public T Pop()
-        {
-            if (IsEmpty())
+            // queue1에 요소를 모두 이동합니다.
+            while (queue1.Count > 0)
             {
-                throw new InvalidOperationException("Stack is empty");
+                queue2.Enqueue(queue1.Dequeue());
             }
 
-            T data = top.Data;
-            top = top.Next;
-            return data;
+            // 새로운 요소를 queue1에 추가합니다.
+            queue1.Enqueue(data);
+
+            // queue2의 요소를 다시 queue1로 이동합니다.
+            while (queue2.Count > 0)
+            {
+                queue1.Enqueue(queue2.Dequeue());
+            }
+
+            count++;
         }
 
+        // 스택에서 요소를 제거하고 반환합니다.
+        public T Pop()
+        {
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Stack is empty.");
+            }
+
+            count--;
+            return queue1.Dequeue();
+        }
+
+        // 스택의 맨 위에 있는 요소를 반환합니다.
+        public T Peek()
+        {
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Stack is empty.");
+            }
+
+            T topElement = queue1.Dequeue();
+            queue1.Enqueue(topElement);
+            return topElement;
+        }
+
+        // 스택이 비어 있는지 여부를 반환합니다.
         public bool IsEmpty()
         {
-            return top == null;
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Stack<int> stack = new Stack<int>();
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
-
-            Console.WriteLine(stack.Pop()); // Output: 3
-            Console.WriteLine(stack.Pop()); // Output: 2
-            Console.WriteLine(stack.Pop()); // Output: 1
+            return count == 0;
         }
     }
 }
