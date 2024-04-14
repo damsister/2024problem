@@ -35,6 +35,13 @@ public class StaticMeshGen : MonoBehaviour
             new Vector3(1.0f, 1.0f, 0.0f),
         };
 
+        Vector3[] normal = new Vector3[] //삼각형(normal)
+        {
+            new Vector3(0.0f, 0.0f, 0.0f),
+            new Vector3(0.0f, 0.0f, 0.0f),
+            new Vector3(0.0f, 0.0f, 0.0f),
+        };
+
         mesh.vertices = vretices; //점 넣기
 
         int[] trianglelndices = new int[]

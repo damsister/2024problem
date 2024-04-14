@@ -606,9 +606,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.2479639, y: 0.0900408, z: 3.0156386}
+    m_Target: {x: -0.3519899, y: 2.247615, z: -2.6277666}
     speed: 2
-    m_Value: {x: -1.2479639, y: 0.0900408, z: 3.0156386}
+    m_Value: {x: -0.3519899, y: 2.247615, z: -2.6277666}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -654,13 +654,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.026369063, y: -0.42259276, z: 0.012304525, w: 0.90585685}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.026368959, y: -0.4225911, z: 0.012304476, w: 0.9058533}
+    m_Value: {x: -0, y: 0, z: -0, w: -1}
   m_Size:
-    m_Target: 3.385533
+    m_Target: 2.0454936
     speed: 2
-    m_Value: 3.385533
+    m_Value: 2.0454936
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -891,7 +891,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Problem5/Script
+    - Assets/Problem6-1/Script
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -899,16 +899,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Problem5/Script
+  - Assets/Problem6-1/Script
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "D:\\\uAE40\uB3C4\uD604-2\\\uC720\uD55C\uB300\uD559\uAD50\\\uC720\uD55C\uB3003\\2024Problem\\ProblemSol"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d2590000
-    m_LastClickedID: 22994
-    m_ExpandedIDs: 00000000b8590000c459000000ca9a3b
+    m_SelectedIDs: 005a0000
+    m_LastClickedID: 23040
+    m_ExpandedIDs: 00000000f2590000f459000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -936,7 +936,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b8590000ba590000bc590000
+    m_ExpandedIDs: 00000000f2590000f4590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -963,7 +963,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

@@ -143,8 +143,35 @@ public class StarMesh : MonoBehaviour
             34, 39, 30,
         };
 
+        // 정점당 평균 법선 벡터를 저장할 배열을 생성합니다.
+        Vector3[] normals = new Vector3[vertices.Length];
+
+        // 삼각형의 법선을 계산합니다.
+        for (int i = 0; i < triangleIndices.Length; i += 3)
+        {
+            int index0 = triangleIndices[i];
+            int index1 = triangleIndices[i + 1];
+            int index2 = triangleIndices[i + 2];
+
+            Vector3 side1 = vertices[index1] - vertices[index0];
+            Vector3 side2 = vertices[index2] - vertices[index0];
+            Vector3 normal = Vector3.Cross(side1, side2).normalized;
+
+            // 각 삼각형의 세 정점에 법선을 설정합니다.
+            normals[index0] += normal;
+            normals[index1] += normal;
+            normals[index2] += normal;
+        }
+
+        // 정규화된 법선을 설정합니다.
+        for (int i = 0; i < normals.Length; i++)
+        {
+            normals[i] = normals[i].normalized;
+        }
+
         mesh.vertices = vertices;
         mesh.triangles = triangleIndices;
+        mesh.normals = normals; // 법선을 설정합니다.
 
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
         if (mf == null)
@@ -155,6 +182,6 @@ public class StarMesh : MonoBehaviour
             mr = gameObject.AddComponent<MeshRenderer>();
 
         mf.mesh = mesh;
-        mr.material.shader = Shader.Find("Custom/Yellow");
+        //mr.material.shader = Shader.Find("Custom/Yellow"); //쉐이더(Material 없어도 적용 가능)
     }
 }
