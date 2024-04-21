@@ -2,20 +2,20 @@ Shader "Unlit/ToonShader1"
 {
     Properties
     {
-        _DiffuseColor("Diffuse Color", Color) = (1, 1, 1, 1)
-        _LightDirection("Light Direction", Vector) = (1, -1, -1, 0)
-        _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
-        _OutlineWidth("Outline Width", Range(0.001, 0.1)) = 0.03
+        _DiffuseColor("DiffuseColor", Color) = (1,1,1,1)
+        _LightDirection("LightDirection", Vector) = (1,-1,-1,0)
     }
-
         SubShader
     {
         Tags { "RenderType" = "Opaque" }
+
+
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
             #include "UnityCG.cginc"
 
             struct appdata
@@ -26,43 +26,51 @@ Shader "Unlit/ToonShader1"
 
             struct v2f
             {
-                float4 pos : POSITION;
+                float4 vertex : SV_POSITION;
                 float3 normal : NORMAL;
             };
 
             float4 _DiffuseColor;
-            float4 _OutlineColor;
-            float _OutlineWidth;
             float4 _LightDirection;
 
             v2f vert(appdata v)
             {
                 v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 return o;
             }
 
-            half4 frag(v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
-                half4 diffuseColor = _DiffuseColor;
-
-                // Calculate outline
-                half4 outlineColor = _OutlineColor;
-                float2 d = fwidth(i.pos.xy);
-                float outline = 1.0 - smoothstep(_OutlineWidth - d.x, _OutlineWidth + d.x, i.pos.z);
-
-                // Apply outline
-                diffuseColor = lerp(diffuseColor, outlineColor, outline);
-
-                // Apply simple lighting
+                // sample the texture
+                //fixed4 col = float4(1.0f,1.0f,0.0,1.0f);
+                float3 normal = normalize(i.normal);
+                float3 viewDir = normalize(i.vertex.xyz);
                 float3 lightDir = normalize(_LightDirection.xyz);
-                float ndotl = dot(i.normal, lightDir);
-                diffuseColor.rgb *= ndotl;
 
-                return diffuseColor;
+                float ambientS = 0.2;
+                float3 ambient = ambientS * _DiffuseColor.rgb;
+
+                float diff = max(dot(normal, lightDir),0.0);
+                float3 diffuse = diff * _DiffuseColor.rgb;
+
+                float3 reflectDir = reflect(-lightDir,normal);
+                float spec = pow(max(dot(viewDir,reflectDir),0.0),32.0);
+                float3 specular = 0.5 * spec * float3(1.0, 1.0, 1.0);
+
+                float3 result = (ambient + diffuse + specular);
+
+                float threshold = 0.4;
+            float3 banding = floor(result / threshold);
+            float3 finalIntensity = banding * threshold;
+
+            float4 col = float4(finalIntensity.x, finalIntensity.y, finalIntensity.z, 1.0);
+            //float4 col = float4(result,1.0);
+
+            return col;
             }
-            ENDCG
+        ENDCG
         }
     }
 }

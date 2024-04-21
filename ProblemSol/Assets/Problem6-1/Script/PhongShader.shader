@@ -2,48 +2,76 @@ Shader "Custom/PhongShader"
 {
     Properties
     {
-        _DiffuseColor("Diffuse Color", Color) = (1, 1, 1, 1)
-        _LightDirection("Light Direction", Vector) = (1, -1, -1, 0)
-        _SpecularColor("Specular Color", Color) = (1, 1, 1, 1)
-        _Shininess("Shininess", Range(1, 100)) = 32
+        _Color("Main Color", Color) = (1.0, 0.0, 0.0, 1.0)
+        _LightDirection("Light Direction", Vector) = (1,-1,-1,0)
+        _AmbientIntensity("Ambient Intensity", Range(0, 1)) = 0.2
+        _DiffuseIntensity("Diffuse Intensity", Range(0, 1)) = 0.5
+        _SpecularIntensity("Specular Intensity", Range(0, 1)) = 0.5
+        _SpecularPower("Specular Power", Range(1, 100)) = 10.0
+        _LightColor("Light Color", Color) = (1.0, 1.0, 1.0, 1.0)
     }
 
         SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags { "LightMode" = "ForwardBase" }
 
-        CGPROGRAM
-        #pragma surface surf Phong
-
-        sampler2D _MainTex;
-
-        struct Input
+        Pass
         {
-            float2 uv_MainTex;
-        };
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
+            #include "Lighting.cginc"
 
-        fixed4 _DiffuseColor;
-        float4 _LightDirection;
-        fixed4 _SpecularColor;
-        float _Shininess;
+            float4 _Color;
+            float3 _LightDirection;
+            float _AmbientIntensity;
+            float _DiffuseIntensity;
+            float _SpecularIntensity;
+            float _SpecularPower;
+            float4 _LightColor;
 
-        void surf(Input IN, inout SurfaceOutputPhong o)
-        {
-            // Albedo
-            fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _DiffuseColor;
-            o.Albedo = c.rgb;
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+            };
 
-            // Normal
-            o.Normal = float3(0, 0, 1); // You may want to provide the actual normal here
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float3 worldNormal : TEXCOORD0;
+                float3 viewDir : TEXCOORD1;
+                float3 lightDir : TEXCOORD2;
+            };
 
-            // Specular
-            float3 lightDir = normalize(_LightDirection.xyz);
-            float3 viewDir = normalize(_WorldSpaceCameraPos - o.WorldPos);
-            float3 halfDir = normalize(lightDir + viewDir);
-            float specAngle = max(0.0, dot(o.Normal, halfDir));
-            o.Specular = _SpecularColor.rgb * pow(specAngle, _Shininess);
+            v2f vert(appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                o.lightDir = normalize(_WorldSpaceLightPos0 - v.vertex);
+                o.viewDir = normalize(_WorldSpaceCameraPos - v.vertex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                float3 worldNormal = normalize(i.worldNormal);
+                float3 lightDir = normalize(_LightDirection);
+                float3 viewDir = normalize(i.viewDir);
+                float3 halfDir = normalize(lightDir + viewDir);
+
+                float ambient = _AmbientIntensity;
+                float diffuse = max(0.0, dot(worldNormal, lightDir)) * _DiffuseIntensity;
+
+                float specular = pow(max(0.0, dot(worldNormal, halfDir)), _SpecularPower) * _SpecularIntensity;
+
+                fixed4 finalColor = _Color * (_LightColor * (ambient + diffuse) + specular);
+
+                return finalColor;
+            }
+            ENDCG
         }
-        ENDCG
     }
-        FallBack "Diffuse"
 }

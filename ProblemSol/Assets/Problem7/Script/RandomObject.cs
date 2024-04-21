@@ -43,7 +43,6 @@ public class RandomObject : MonoBehaviour
             // TargetObject를 생성하고 랜덤한 위치에 배치합니다.
             GameObject newObject = Instantiate(TargetObject, randomPosition, Quaternion.identity);
         }
-
     }
 
 #if UNITY_EDITOR

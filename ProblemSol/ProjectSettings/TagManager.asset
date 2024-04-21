@@ -6,6 +6,8 @@ TagManager:
   tags:
   - rad
   - green
+  - Plane
+  - plane
   layers:
   - Default
   - TransparentFX
