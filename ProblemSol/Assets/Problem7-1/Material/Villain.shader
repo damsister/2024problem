@@ -60,15 +60,16 @@ Shader "Custom/Villain"
                 float3 specular = 0.5 * spec * float3(1.0, 1.0, 1.0);
 
                 float3 result = (ambient + diffuse + specular);
-
+                
+                //4ÁÙÀ» Áö¿ì¸é Æş½¦ÀÌµùÀÌ µÊ
                 float threshold = 0.4;
-            float3 banding = floor(result / threshold);
-            float3 finalIntensity = banding * threshold;
+                float3 banding = floor(result / threshold);
+                float3 finalIntensity = banding * threshold;
 
-            float4 col = float4(finalIntensity.x, finalIntensity.y, finalIntensity.z, 1.0);
-            //float4 col = float4(result,1.0);
+                float4 col = float4(finalIntensity.x, finalIntensity.y, finalIntensity.z, 1.0); //Ä«Å÷½¦ÀÌµù¿ë
+                //float4 col = float4(result,1.0); //Æş½¦ÀÌµù¿ë
 
-            return col;
+                return col;
             }
         ENDCG
         }
