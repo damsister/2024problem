@@ -30,6 +30,12 @@ public class ChangeMainCamera : MonoBehaviour
             // Villain의 중심점이 프러스텀 내에 있는지 확인
             bool isInsideFrustum = frustum.IsInsideFrustum(Villain.bounds.center);
 
+            if (Villain.CompareTag("ground"))
+            {
+                this.gameObject.SetActive(true);
+                continue;
+            }
+
             if (isInsideFrustum && !Villain.gameObject.activeSelf) // 프러스텀 내에 있고 활성화되지 않았을 때
             {
                 Villain.gameObject.SetActive(true); // 활성화
