@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour
+public class PlayerControll1 : MonoBehaviour
 {
     public float moveSpeed = 6f; // 이동 속도
     public float boundaryX = 10f; // X축 이동 제한

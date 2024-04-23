@@ -9,6 +9,7 @@ TagManager:
   - ground
   - plane
   - player
+  - Villain
   layers:
   - Default
   - TransparentFX
