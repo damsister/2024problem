@@ -5,29 +5,20 @@ using UnityEngine.UIElements;
 
 public class CameraControll : MonoBehaviour
 {
-    // 회전할 각도
-    public float rotationAngle = 90f;
+    // 카메라가 추적할 대상 (플레이어)
+    public Transform target;
+    // 회전 속도
+    public float rotationSpeed = 5f;
 
-    // Start is called before the first frame update
-    void Start()
+    void LateUpdate()
     {
-        
-    }
+        if (target == null)
+            return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKey(KeyCode.O))
-        {
-            RotateCamera(-rotationAngle);
-        }
-        if (Input.GetKey(KeyCode.P))
-        {
-            RotateCamera(rotationAngle);
-        }
-    }
-    void RotateCamera(float angle)
-    {
-        transform.Rotate(Vector3.up, angle);
+        // 플레이어를 따라 이동
+        transform.position = target.position;
+
+        // 플레이어의 회전 각도를 카메라에 적용
+        transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, rotationSpeed * Time.deltaTime);
     }
 }
