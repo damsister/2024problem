@@ -9,6 +9,7 @@ TagManager:
   - ground
   - plane
   - player
+  - Rotate
   layers:
   - Default
   - TransparentFX

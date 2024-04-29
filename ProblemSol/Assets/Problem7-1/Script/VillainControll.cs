@@ -29,4 +29,11 @@ public class VillainControll : MonoBehaviour
             transform.position += transform.forward * moveSpeed * Time.deltaTime; // 앞으로 이동
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        // 적이 감지 범위를 시각적으로 표시
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
 }
