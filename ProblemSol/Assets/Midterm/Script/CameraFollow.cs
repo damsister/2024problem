@@ -5,9 +5,11 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform player; // 플레이어의 Transform
+    public Transform maincamera; // 메인 카메라
     public float chaseSpeed = 5.0f; // 플레이어를 쫓는 속도
     public float returnSpeed = 1.0f; // 원래 위치로 돌아가는 속도
-    public float fieldOfViewAngle = 60.0f; // 카메라 시야 각도
+    public float fieldOfViewAngle = 45.0f; // 카메라 시야 각도
+    public float fieldOfView = 3.0f; // 카메라 시야 거리
 
     private Vector3 originalPosition; // 초기 카메라 위치
     private Quaternion originalRotation; // 초기 카메라 회전

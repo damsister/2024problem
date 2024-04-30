@@ -9,15 +9,17 @@ public class MapGenerator : MonoBehaviour
     public int mapHeight = 10; // 맵의 세로 크기
     public GameObject floorObject; // 맵 바닥을 나타내는 오브젝트
 
-    //public string mapDataPath; // 맵 데이터가 저장된 CSV 파일의 경로
     public GameObject lowWallPrefab; // 낮은 벽 프리팹
     public GameObject highWallPrefab; // 높은 벽 프리팹
+    public GameObject pathPrefab; // 통로 프리팹
+
+    public string MapDataPath = "MapDataPath"; // CSV 파일의 경로
 
 
     void Start()
     {
         GenerateMap();
-        GenerateMapFromCSV();
+        GenerateMazeFromCSV();
     }
 
     void GenerateMap()
@@ -26,37 +28,36 @@ public class MapGenerator : MonoBehaviour
         transform.localScale = new Vector3(mapWidth, 1, mapHeight);
     }
 
-    void GenerateMapFromCSV()
+    void GenerateMazeFromCSV()
     {
-        string mapDataPath = "D:\\김도현-2\\유한대학교\\유한대3\\2024problem\\ProblemSol\\Assets\\Midterm\\Resources"; // 불러올 파일의 경로를 지정
-        // CSV 파일 읽기
-        string[] lines = File.ReadAllLines(mapDataPath);
-        int rowCount = lines.Length;
+        string[] lines = Resources.Load<TextAsset>(MapDataPath).text.Split(',');
 
-        // 각 줄을 파싱하여 2차원 배열로 변환
-        int[,] mapData = new int[rowCount, lines[0].Split(',').Length];
-        for (int y = 0; y < rowCount; y++)
-        {
-            string[] values = lines[y].Split(',');
-            for (int x = 0; x < values.Length; x++)
-            {
-                int.TryParse(values[x], out mapData[y, x]);
-            }
-        }
 
-        // 맵 생성
-        for (int y = 0; y < rowCount; y++)
+        for (int y = 0; y < lines.Length; y++)
         {
-            for (int x = 0; x < mapData.GetLength(1); x++)
+            string line = lines[y];
+            string[] cells = line.Split(',');
+
+            for (int x = 0; x < cells.Length; x++)
             {
-                Vector3 spawnPosition = new Vector3(x, 0, -y); // y 좌표를 반전하여 맵을 정상적으로 생성
-                if (mapData[y, x] == 1)
+                int cellValue = int.Parse(cells[x]);
+
+                //낮은 벽인 경우
+                if (cellValue == 2)
                 {
-                    Instantiate(lowWallPrefab, spawnPosition, Quaternion.identity);
+                    Instantiate(lowWallPrefab, new Vector3(x, 0, -y), Quaternion.identity);
                 }
-                else if (mapData[y, x] == 2)
+
+                // 벽인 경우
+                else if (cellValue == 1)
                 {
-                    Instantiate(highWallPrefab, spawnPosition, Quaternion.identity);
+                    Instantiate(highWallPrefab, new Vector3(x, 0, -y), Quaternion.identity);
+                }
+
+                // 통로인 경우
+                else if (cellValue == 0)
+                {
+                    Instantiate(pathPrefab, new Vector3(x, 0, -y), Quaternion.identity);
                 }
             }
         }

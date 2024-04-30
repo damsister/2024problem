@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5280135601417335523
+--- !u!1 &1286433734684759111
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 386321585634219169}
-  - component: {fileID: 1119208267702426181}
-  - component: {fileID: 4378874795346007624}
+  - component: {fileID: 3781109789361641185}
+  - component: {fileID: 4078979487257058691}
+  - component: {fileID: 401254024420164645}
   m_Layer: 0
-  m_Name: EnemyCamera
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &386321585634219169
+--- !u!4 &3781109789361641185
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5280135601417335523}
+  m_GameObject: {fileID: 1286433734684759111}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8376615164112317123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1119208267702426181
+--- !u!20 &4078979487257058691
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5280135601417335523}
+  m_GameObject: {fileID: 1286433734684759111}
   m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
@@ -65,8 +65,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 3000
-  field of view: 45
+  far clip plane: 3
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -84,13 +84,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4378874795346007624
+--- !u!81 &401254024420164645
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5280135601417335523}
+  m_GameObject: {fileID: 1286433734684759111}
   m_Enabled: 0
 --- !u!1 &6303000364575917317
 GameObject:
@@ -232,7 +232,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6840660456202139137}
-  - {fileID: 386321585634219169}
+  - {fileID: 3781109789361641185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4586543503271849566
@@ -340,4 +340,4 @@ MonoBehaviour:
   player: {fileID: 0}
   chaseSpeed: 5
   returnSpeed: 1
-  fieldOfViewAngle: 50
+  fieldOfViewAngle: 45
