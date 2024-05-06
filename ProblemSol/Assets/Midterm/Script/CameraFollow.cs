@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
-{
+{//시야거리의 3배 계산 = 6.708204
     public Transform player; // 플레이어의 Transform
-    public Transform maincamera; // 메인 카메라
     public float chaseSpeed = 5.0f; // 플레이어를 쫓는 속도
     public float returnSpeed = 1.0f; // 원래 위치로 돌아가는 속도
-    public float fieldOfViewAngle = 45.0f; // 카메라 시야 각도
-    public float fieldOfView = 3.0f; // 카메라 시야 거리
+    public float fieldOfViewMultiplier = 3.0f; // 시야 거리의 배수
 
     private Vector3 originalPosition; // 초기 카메라 위치
     private Quaternion originalRotation; // 초기 카메라 회전
@@ -21,26 +19,33 @@ public class CameraFollow : MonoBehaviour
     {
         originalPosition = transform.position;
         originalRotation = transform.rotation;
+        Camera.main.fieldOfView *= fieldOfViewMultiplier; // 시야 거리 설정
     }
 
     void Update()
     {
         // 플레이어가 시야 범위 내에 있는지 확인
         Vector3 directionToPlayer = player.position - transform.position;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        float distanceToPlayer = directionToPlayer.magnitude;
+        if (distanceToPlayer <= Camera.main.farClipPlane * fieldOfViewMultiplier)
+        {
+            Vector3 forward = transform.forward;
+            forward.y = 0; // 수평 방향으로만 고려
+            float angleToPlayer = Vector3.Angle(forward, directionToPlayer);
 
-        if (angleToPlayer <= fieldOfViewAngle * 0.5f)
-        {
-            // 플레이어를 쫓기 시작
-            isChasing = true;
-            isReturning = false;
-        }
-        else if (isChasing)
-        {
-            // 플레이어를 쫓고 있었는데 범위를 벗어남
-            isChasing = false;
-            isReturning = true;
-            returnTimer = 6f; // 두리번거리는 시간 초기화
+            if (angleToPlayer <= 45.0f * 0.5f)
+            {
+                // 플레이어를 쫓기 시작
+                isChasing = true;
+                isReturning = false;
+            }
+            else if (isChasing)
+            {
+                // 플레이어를 쫓고 있었는데 범위를 벗어남
+                isChasing = false;
+                isReturning = true;
+                returnTimer = 6.0f; // 두리번거리는 시간 초기화
+            }
         }
 
         if (isChasing)
@@ -62,17 +67,10 @@ public class CameraFollow : MonoBehaviour
             else
             {
                 // 두리번거리는 동작
-                float t = Mathf.PingPong(Time.time * 0.5f, 1f); // 3초마다 왕복
-                float angle = Mathf.Lerp(90f, 270f, t); // 90도에서 270도 사이로 두리번거리기
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                float t = Mathf.PingPong(Time.time * 0.5f, 1.0f); // 3초마다 왕복
+                float angle = Mathf.Lerp(-90.0f, 90.0f, t); // -90도에서 90도 사이로 두리번거리기
+                transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
             }
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // 적이 감지 범위를 시각적으로 표시
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawFrustum(transform.position, fieldOfViewAngle, fieldOfViewAngle, 0, 1);
     }
 }
