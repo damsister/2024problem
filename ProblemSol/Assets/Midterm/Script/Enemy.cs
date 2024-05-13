@@ -53,6 +53,10 @@ public class Enemy : MonoBehaviour
     {
         // 적의 이동 가능한 영역을 노란색으로 표시
         Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // 노란색 + 반투명 설정
-        Gizmos.DrawCube(new Vector3((minX + maxX) / 2, transform.position.y, (minZ + maxZ) / 2), new Vector3(maxX - minX, 0.1f, maxZ - minZ));
+
+        // Enemy의 위치를 기준으로 영역을 표시
+        Vector3 center = transform.position;
+        Vector3 size = new Vector3(maxX - minX, 0.1f, maxZ - minZ);
+        Gizmos.DrawCube(center, size);
     }
 }
