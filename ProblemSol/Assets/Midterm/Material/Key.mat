@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: End
+  m_Name: Key
   m_Shader: {fileID: 4800000, guid: 7392c484d954fa94b9f51a664322431a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -78,8 +78,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0.83938456, a: 1}
-    - _DiffuseColor: {r: 1, g: 0.4198113, b: 0.4198113, a: 1}
+    - _Color: {r: 0.40659094, g: 0, b: 1, a: 1}
+    - _DiffuseColor: {r: 0.65682715, g: 0.3443396, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightDirection: {r: 1, g: 0.55, b: -1, a: 0}
   m_BuildTextureStacks: []

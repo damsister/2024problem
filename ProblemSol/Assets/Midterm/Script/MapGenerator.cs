@@ -2,12 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEditor;
+
+[CustomEditor(typeof(MapGenerator))]
+
+public class MapGeneratorEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        MapGenerator script = (MapGenerator)target;
+
+        if (GUILayout.Button("Generate Mesh"))
+        {
+            script.Start();
+        }
+    }
+}
 
 public class MapGenerator : MonoBehaviour
 {
     public GameObject wallPrefab; // 벽 프리팹
-    public GameObject doorPrefab; // 문 프리팹
-    public GameObject keyPrefab; // 열쇠 프리팹
     public TextAsset mapCSV; // 맵 정보를 담은 CSV 파일
     public Vector2 cellSize; // 셀의 크기
     public Transform planeTransform; // Plane의 Transform
@@ -15,9 +31,7 @@ public class MapGenerator : MonoBehaviour
     private int[,] mapData; // 맵 정보를 저장할 배열
     private Vector2Int mapSize = new Vector2Int(10, 10); // 고정된 맵의 가로세로 크기
 
-    private bool hasKey = false; // 열쇠를 가졌는지 여부
-
-    void Start()
+    public void Start()
     {
         // CSV 파일을 읽어와 맵 데이터를 초기화
         LoadMapFromCSV();
@@ -52,23 +66,6 @@ public class MapGenerator : MonoBehaviour
         // 미로의 시작 위치 계산
         Vector3 mazeStartPosition = new Vector3(-mapSize.x * cellSize.x / 2f + cellSize.x / 2f, 0f, mapSize.y * cellSize.y / 2f - cellSize.y / 2f);
 
-        // 랜덤한 위치에 열쇠 생성
-        for (int i = 0; i < mapSize.y; i++)
-        {
-            for (int j = 0; j < mapSize.x; j++)
-            {
-                if (mapData[i, j] == 4)
-                {
-                    // 위치 계산
-                    Vector3 position = mazeStartPosition + new Vector3(j * cellSize.x, 0f, -i * cellSize.y);
-
-                    // 열쇠 생성
-                    GameObject key = Instantiate(keyPrefab, position + new Vector3(0f, 0.2f, 0f), Quaternion.identity);
-                    key.transform.parent = planeTransform;
-                }
-            }
-        }
-
         // 맵 데이터를 기반으로 벽과 문을 생성하여 배치
         for (int i = 0; i < mapSize.y; i++)
         {
@@ -90,33 +87,8 @@ public class MapGenerator : MonoBehaviour
                         wall.transform.localScale = new Vector3(cellSize.x, cellType == 2 ? 1.3f * cellSize.y : cellSize.y, cellSize.y);
                         wall.transform.parent = planeTransform;
                     }
-                    else if (cellType == 3)
-                    {
-                        // 문 생성
-                        GameObject door = Instantiate(doorPrefab, position, Quaternion.identity);
-                        // 문을 90도로 회전시킴
-                        door.transform.Rotate(Vector3.up, 90f);
-
-                        door.transform.localScale = new Vector3(cellSize.x, cellSize.y, 0.1f);
-                        door.transform.parent = planeTransform;
-
-                        // 문에 열쇠를 할당
-                        if (!hasKey && mapData[i, j] == 4)
-                        {
-                            GameObject key = Instantiate(keyPrefab, position + new Vector3(0f, cellSize.y / 2f, 0f), Quaternion.identity);
-                            key.transform.parent = door.transform;
-                            hasKey = true;
-                        }
-                    }
                 }
             }
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) // 플레이어와 충돌한 경우
-        {
-            Destroy(gameObject); // 열쇠 오브젝트 파괴
         }
     }
 }

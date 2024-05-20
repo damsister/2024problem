@@ -8,7 +8,12 @@ TagManager:
   - Enemy
   - Start
   - End
-  - Key
+  - player
+  - ground
+  - plane
+  - Villain
+  - key
+  - Door
   layers:
   - Default
   - TransparentFX

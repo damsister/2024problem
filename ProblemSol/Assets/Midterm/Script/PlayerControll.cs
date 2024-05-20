@@ -24,6 +24,7 @@ public class PlayerControll : MonoBehaviour
 
     bool end = false;
 
+
     void Start()
     {
         // 시작 지점으로 플레이어 이동
@@ -65,7 +66,7 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("End"))
+        if (collision.collider.CompareTag("End"))
         {
             EndGame();
         }
